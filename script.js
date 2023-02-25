@@ -18,7 +18,7 @@ const activeTask = document.querySelector('.active-task')
 const completedTask = document.querySelector('.completed-task')
 const addTaskTitle = document.querySelector('.task-title');
 const addTaskDescription = document.querySelector('.task-description');
-// const input = document.querySelector('.trial')
+const input = document.querySelector('.checkers')
 const footer = document.querySelector('footer')
 const footerLink = document.querySelectorAll('.footer-link')
 // const displayActive = document.querySelector('.active-length')
@@ -27,7 +27,7 @@ const footerLink = document.querySelectorAll('.footer-link')
 // const clearActive = document.querySelector('.clear-active')
 // const clearCompleted = document.querySelector('.clear-completed')
 const demarcation = document.querySelector('.line')
-// const radio = document.querySelector('.input-check__box')
+// const checkbox = document.querySelector('.input-check__box')
 const darkMode = document.querySelector('.dark-mode')
 const darkModeSun = document.querySelector('.dark-mode__sun')
 const darkModeMoon = document.querySelector('.dark-mode__moon')
@@ -70,6 +70,7 @@ logInCta.addEventListener('click', function (e) {
     displayDate.textContent = `${day}/${month}/${year}, ${hours}:${minutes}`
     usersName = name[0].toUpperCase() + name.slice(1)
     displayUsername.textContent = usersName
+
 });
 darkMode.addEventListener('click', function () {
     darkModeSun.classList.toggle('hidden')
@@ -107,7 +108,7 @@ const displayActiveTasks = function (user) {
         const html = `<div class="flex justify-between items-center">
                 <div>
                     <div class=" flex  gap-3 items-start   ">
-                        <input type="radio" name="radio" class="checkers self-center bg-red-500 align-middle" />
+                        <input type="checkbox"  class="checkers self-center bg-red-500 align-middle" />
                         <p class="align-middle">${title}</p>
                     </div>
                     <p class="ml-7 text-sm text-teal-700 " data-index=${i + 1}>${description}</p>
@@ -117,8 +118,8 @@ const displayActiveTasks = function (user) {
                 </div>
                 </div>`
         activeTaskContainer.insertAdjacentHTML('afterbegin', html)
-        console.log(user.active.title.length)
-        console.log(user.completed.title.length)
+        // console.log(user.active.title.length)
+        // console.log(user.completed.title.length)
         document.querySelector('.active-length').textContent = `${user.active.title.length}`
         document.querySelector('.completed-length').textContent = `${user.completed.title.length}`
     });
@@ -149,7 +150,7 @@ const displayCompletedTask = function (user) {
         const html = `<div class="flex justify-between items-center">
         <div>
         <div class=" flex  gap-3 items-start   ">
-                        <input type="radio" name="radio" class="checkers self-center bg-red-500 align-middle" />
+                        <input type="checkbox" name="checkbox" class="checkers self-center bg-red-500 align-middle" />
                         <p class="align-middle">${title}</p>
                     </div>
                     <p class="ml-7 text-sm text-teal-700">${description}
@@ -246,7 +247,12 @@ completedTaskContainer.addEventListener('click', function (e) {
     }
     // transferring
     if (e.target.classList.contains('checkers')) {
-        console.log('input')
+        if (input.checked) {
+        console.log('input');
+        }
+    console.log(input)
+
+        // if()
     }
     //UPDATEUI
     updateUI(user)
@@ -257,23 +263,23 @@ completedTaskContainer.addEventListener('click', function (e) {
     
 // }
 // transferData()
-const stickyNav = function () {
-    const navObsCall = function (entries, observer) {
-       const [entry] = entries
-        if (!entry.isIntersecting) {
-            nav.classList.add('sticky')   
-        } else {
-            nav.classList.remove('sticky')   
+// const stickyNav = function () {
+//     const navObsCall = function (entries, observer) {
+//        const [entry] = entries
+//         if (!entry.isIntersecting) {
+//             nav.classList.add('sticky')   
+//         } else {
+//             nav.classList.remove('sticky')   
 
-        }
-    }
-    const options = {
-        root: null,
-        threshold: 0
-    }
-    const navObs = new IntersectionObserver(
-        navObsCall, options
-    )
-    navObs.observe(nav)
-}
-stickyNav();
+//         }
+//     }
+//     const options = {
+//         root: null,
+//         threshold: 0
+//     }
+//     const navObs = new IntersectionObserver(
+//         navObsCall, options
+//     )
+//     navObs.observe(nav)
+// }
+// stickyNav();
