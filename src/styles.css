@@ -1,0 +1,26 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.categories {
+  height: calc(100vh - 40px);
+}
+
+.line {
+  height: 0.1px;
+}
+.overlay {
+  background-color: rgba(0, 0, 0, 0.5);
+}
+.active-link {
+  border-bottom: 1px white solid;
+  transition: all 10s 0.5s;
+}
+.main-area {
+  background-color: linear-gradient(to bottom, #434343, #000);
+  /* background-color: red; */
+}
+.sticky {
+  position: fixed;
+  width: 100%;
+}
