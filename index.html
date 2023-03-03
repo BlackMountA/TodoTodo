@@ -10,7 +10,7 @@
 </head>
 <body class="bg-black h-screen">
     <!-- LOGIN -->
-    <div class="log-in__page bg-black ">
+    <!-- <div class="log-in__page bg-black ">
         <form class="w-screen h-screen  ">
             <div class="flex flex-col w-2/6 px-4  py-8 fixed  top-2/4 left-2/4 -translate-y-2/4 -translate-x-2/4 bg-blue-900 gap-5 rounded-xl">
                 
@@ -25,18 +25,16 @@
             <p class="text-white italic text-sm font-light ">Don't have an account? <a href="https:/google.com" class="underline decoration-green-500">sign in</a></p>
             </div>
         </form>
-    </div>
+    </div> -->
     
     
         
 
         <!-- TODO LIST -->
-<main class="  hidden  ">
+<main class="    ">
         <nav class=" nav bg-blue-900 flex justify-between items-center px-4 py-1">
-            <div class="hamurger-container flex flex-col gap-1 ">
-                <div class="hamurger w-5 h-1 bg-white"></div>
-                <div class="hamurger w-5 h-1 bg-white"></div>
-                <div class="hamurger w-5 h-1 bg-white"></div>
+            <div>
+                <p class="text-white">TODDOOO</p>
             </div>
             <div class="dark-mode relative">
                 <svg xmlns="http://www.w3.org/2000/svg" class="dark-mode__sun" width="26" height="26">
@@ -67,65 +65,52 @@
                     <label class=" text-base font-medium text-white">Description</label>
                     <textarea required  type="text" class=" task-description text-white h-24 bg-transparent shadow-white shadow-sm rounded-md placeholder:text-white" placeholder="morning running"  >  </textarea>
                 </div>
-                <div class="flex flex-col gap-1 ">
+                <!-- <div class="flex flex-col gap-1 ">
                     <select class="bg-transparent p-1 shadow-white shadow-sm rounded-md  ">
                         <option></option>
                         <option>game</option>
                         <option>game</option>
                         <option>game</option>
                     </select>
-                </div>
-                <div class="flex flex-col gap-1 shadow-white shadow-sm rounded-md ">
+                </div> -->
+                <!-- <div class="flex flex-col gap-1 shadow-white shadow-sm rounded-md ">
                     <input type="date" id=""  class="bg-transparent p-1 focus:outline-white">
                 </div>
                 <div class="flex flex-col gap-1 bg-green-500 rounded-md ">
                     <input type="time" id=""  class="bg-transparent p-1 focus:outline-white" >
-                </div>
+                </div> -->
                 <button class="add-task-cta bg-blue-900 rounded-md w-1/3 p-2 text-white mx-auto my-0">Add task</button>
             </form>
         </div>
 
     <div class="">
-        <!-- SIDE-BAR -->
-      <aside class=" side-bar w-48 categories bg-black fixed hidden ">
-        <div class=" flex flex-col p-4 gap-3">
-            <h1 class="text-teal-700 text-xl font-bold">Projects</h1>
-            <ul class="flex flex-col gap-6 px-2">
-                <li class="text-teal-700 text-sm">Home 🏘</li>
-                <li class="text-teal-700 text-sm">Work 🏦</li>
-                <li class="text-teal-700 text-sm">Personal</li>
-            </ul>
-        </div>
-      </aside>
-
       <!-- MAIN CONTENT -->
       <section class="  w-full py-4 px-5 ">
-        <header class=" welcome-message flex justify-between">
-            <p class=" font-sans font-bold text-xl">Welcome Back, <span class="username-display"> </span></p>
+        <header class=" welcome-message text-white flex justify-between">
+            <p class=" font-sans font-bold  text-xl">Welcome Back <span class="username-display"> </span></p>
             <p class="date font-sans font-bold text-xl">40/11/2023</p>
         </header>
         <div class="tasks rounded-2xl w-2/4  m-4 mx-auto my-6 bg-gray-800  ">
             <section class="active-task   p-4">
                 <div class="flex justify-between border-b border-teal-700 border-solid items-center">
-                <h1 class="text-xl text-white  font-sans">Active</h1>
-                <div class="active-length font-sans font-sans bg-transparent  border border-solid border-teal-700 px-2 py-0.5  rounded-full">2</div>
+                    <h1 class="text-xl text-white  font-sans">Active</h1>
+                    <div class="active-length font-sans font-sans bg-transparent  border border-solid border-teal-700 px-2 py-0.5  rounded-full">0</div>
                 </div>
+
                 <div class="active-task__container">
-            <!-- <div> -->
-                <div class="task flex flex-col mt-4">
-                    <div class=" flex  gap-3 items-start   ">
-                        <input type="radio" class=" self-center align-middle" />
-                        <p class="align-middle">Title</p>
+                    <!-- <div class="task flex flex-col mt-4">
+                        <div class=" flex  gap-3 items-start   ">
+                            <input type="radio" class=" self-center align-middle" />
+                            <p class="align-middle">Title</p>
+                        </div>
+                        <p class="ml-7 text-sm">Lorem ipsum dolor sit amet consectetur adipisicing elit. Lorem ipsum dolor, sit amet consectetur adipisicing.</p>
                     </div>
-                    <p class="ml-7 text-sm">Lorem ipsum dolor sit amet consectetur adipisicing elit. Lorem ipsum dolor, sit amet consectetur adipisicing. 
-                    </p>
-                </div>
                     <div class="w-4 h-11 font-xl bg-white">
                         &times;
-                    </div>
-                <!-- </div> -->
+                    </div> -->
                 </div>
             </section>
+            
             <div class=" line w-full bg-white px-1">
             </div>
 
@@ -133,19 +118,17 @@
             <section class=" completed-task  p-4 ">
                 <div class="flex justify-between border-b border-teal-700 border-solid items-center">
                     <h1 class="text-xl text-white font-sans">Completed</h1>
-                    <div class=" completed-length font-sans bg-transparent  border border-solid border-teal-700 px-2 py-0.5  rounded-full ">2 <svg xmlns="http://www.w3.org/2000/svg" width="11" height="9">
-                        <path fill="none" stroke="#FFF" stroke-width="2" d="M1 4.304L3.696 7l6-6" />
-                    </svg></div>
+                    <div class=" completed-length font-sans bg-transparent  border border-solid border-teal-700 px-2 py-0.5  rounded-full ">0</div>
                 </div>
                 <div class="completed-task__container task flex flex-col mt-4">
-                    <div class=" flex  gap-3 items-start   ">
-                        <input type="checkbox" name="checkbox" class="checkers  " />
+                    <!-- <div class=" flex  gap-3 items-start   ">
+                        <input type="checkbox" name="checkbox" class="checkers  " /> -->
                         <!-- w-6 self-center align-middle -->
-                        <p class="align-middle">Title</p>
+                        <!-- <p class="align-middle">Title</p>
                     </div>
                     <p class="ml-7 text-sm text-teal-700">Lorem ipsum dolor sit amet consectetur adipisicing elit. Lorem ipsum dolor, sit amet consectetur
                         adipisicing
-                    </p>
+                    </p> -->
                 </div>
             </section>
                 <footer class=" footer flex justify-evenly items-center text-teal-700 py-1.5  border-t border-teal-700 border-solid rounded-b-2xl ">
