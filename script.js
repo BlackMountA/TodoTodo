@@ -27,27 +27,21 @@ const darkModeMoon = document.querySelector('.dark-mode__moon')
 
 const user = {
     active: {
-        title: ['dfshjdh', 'fxoinl'],
-        description: ['dc', 'fdihnfd']
+        title: ['dfshjdh', 'fxoinl' , 'fxoinl' , 'fxoinl' , 'fxoinl' , 'fxoinl' , 'fxoinl' , 'fxoinl' , 'fxoinl' , 'fxoinl' , 'fxoinl'],
+        description: ['dc', 'fdihnfd' , 'fxoinl', 'fxoinl', 'fxoinl', 'fxoinl', 'fxoinl', 'fxoinl', 'fxoinl', 'fxoinl']
     },
     
     
     completed: {
-        title: [],
-        description: []
+        title: [ 'fxoinl', 'fxoinl' , 'fxoinl' , 'fxoinl' , 'fxoinl' , 'fxoinl' , 'fxoinl' , 'fxoinl' , 'fxoinl' , 'fxoinl'],
+        description: ['Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusantium voluptate minus, aliquid id error officia debitis tempore culpa adipisci deleniti.','Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusantium voluptate minus, aliquid id error officia debitis tempore culpa adipisci deleniti.','Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusantium voluptate minus, aliquid id error officia debitis tempore culpa adipisci deleniti.', 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusantium voluptate minus, aliquid id error officia debitis tempore culpa adipisci deleniti.', 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusantium voluptate minus, aliquid id error officia debitis tempore culpa adipisci deleniti.']
     }
 };
 
 
 
 
-// let time = Date.now()
-// setInterval(function () {
-//     time++  
-//     console.log(currentDate.getMilliseconds())
-//     const presentDate = new Date(time)
-//     console.log(presentDate.getMilliseconds())
-// },1000)
+
     // document.querySelector('.welcome-message').style.color = 'white'
 
 //EVENT LISTENERS
@@ -77,14 +71,16 @@ class App {
     }
     _setDescription() {
         const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+        let time = Date.now()
         const currentDate = new Date()
-        const day = `${currentDate.getDate()}`.padStart(2, 0)
-        const month = currentDate.getMonth()
-        const year = currentDate.getFullYear()
-        const hours = currentDate.getHours()
-        const minutes = currentDate.getMinutes()
-        displayDate.textContent = `${day} of ${months[month]}, ${year}`
-        console.log()
+        
+        // const day = 
+        setInterval(function () {
+            time = time + 1000 
+            const presentDate = new Date(time)
+            displayDate.textContent = `${`${currentDate.getDate()}`.padStart(2, 0)} ${months[currentDate.getMonth()]}, ${currentDate.getFullYear()} 
+            ${`${presentDate.getHours()}`.padStart(2, 0)}:${`${presentDate.getMinutes()}`.padStart(2, 0)}` 
+        },1000)
     }
     darkMode() {
         darkModeSun.classList.toggle('hidden')
@@ -92,6 +88,7 @@ class App {
         if (darkModeSun.classList.contains('hidden')) {
             document.querySelector('body').style.backgroundColor = 'white'
             document.querySelector('.welcome-message').style.color = 'black'
+            document.querySelector('.add__Task--mobile').style.color = 'black'
         } else {
             document.querySelector('body').style.backgroundColor = 'black'
             document.querySelector('.welcome-message').style.color = 'white'
