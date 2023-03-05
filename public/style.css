@@ -1049,6 +1049,7 @@ video {
 .footer-link:hover::after {
   width: 100%;
 }
+
 @media (max-width: 768px) {
   .tasks {
     width: 60%;
