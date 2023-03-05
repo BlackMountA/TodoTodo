@@ -1,13 +1,8 @@
 const nav = document.querySelector('.nav')
-// const addTaskBtn = document.querySelector('.add-content__btn')
 const displayDate = document.querySelector('.date')
-const main = document.querySelector('main')
 const addTaskCta = document.querySelector('.add-task-cta')
 const taskPage = document.querySelector('.create-content')
 const overlay = document.querySelector('.overlay')
-const sideBar = document.querySelector('.side-bar')
-// const menuOpenBtn = document.querySelector('.hamurger-container')
-const displayUsername = document.querySelector('.username-display');
 const activeTaskContainer = document.querySelector('.active-task__container')
 const tasksContainer = document.querySelector('.tasks')
 const completedTaskContainer = document.querySelector('.completed-task__container')
@@ -15,36 +10,24 @@ const activeTask = document.querySelector('.active-task')
 const completedTask = document.querySelector('.completed-task')
 const addTaskTitle = document.querySelector('.task-title');
 const addTaskDescription = document.querySelector('.task-description');
-const input = document.querySelector('.checkers')
 const footer = document.querySelector('footer')
 const footerLink = document.querySelectorAll('.footer-link')
 const demarcation = document.querySelector('.line');
-// const checkbox = document.querySelector('.input-check__box')
-// const darkMode = document.querySelector('.dark-mode')
 const darkModeSun = document.querySelector('.dark-mode__sun')
 const darkModeMoon = document.querySelector('.dark-mode__moon')
 
-
 const user = {
     active: {
-        title: ['dfshjdh', 'fxoinl' , 'fxoinl' , 'fxoinl' , 'fxoinl' , 'fxoinl' , 'fxoinl' , 'fxoinl' , 'fxoinl' , 'fxoinl' , 'fxoinl'],
-        description: ['dc', 'fdihnfd' , 'fxoinl', 'fxoinl', 'fxoinl', 'fxoinl', 'fxoinl', 'fxoinl', 'fxoinl', 'fxoinl']
+        title: [],
+        description: []
     },
-    
+
     
     completed: {
-        title: [ 'fxoinl', 'fxoinl' , 'fxoinl' , 'fxoinl' , 'fxoinl' , 'fxoinl' , 'fxoinl' , 'fxoinl' , 'fxoinl' , 'fxoinl'],
-        description: ['Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusantium voluptate minus, aliquid id error officia debitis tempore culpa adipisci deleniti.','Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusantium voluptate minus, aliquid id error officia debitis tempore culpa adipisci deleniti.','Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusantium voluptate minus, aliquid id error officia debitis tempore culpa adipisci deleniti.', 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusantium voluptate minus, aliquid id error officia debitis tempore culpa adipisci deleniti.', 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusantium voluptate minus, aliquid id error officia debitis tempore culpa adipisci deleniti.']
+        title: [ ],
+        description: []
     }
 };
-
-
-
-
-
-    // document.querySelector('.welcome-message').style.color = 'white'
-
-//EVENT LISTENERS
 
 class App {
     constructor(user) {
@@ -52,7 +35,7 @@ class App {
         footer.addEventListener('click', this._footerEvents.bind(this))
         addTaskCta.addEventListener('click', this._addTaskCta.bind(this))
         tasksContainer.addEventListener('click', this._taskContainerEvents.bind(this))
-        overlay.addEventListener('click', this._toggleOverlay);
+        overlay.addEventListener('click', this._hideToggleOverlay);
         this._displayActiveTasks(user)
         this._displayCompletedTasks(user)
         this._setDescription()
@@ -65,7 +48,6 @@ class App {
             this.darkMode()
         }
         if (e.target.classList.contains('add-content__btn')) {
-        console.log(e.target)
             this.addTaskBtn()
         }
     }
@@ -74,7 +56,6 @@ class App {
         let time = Date.now()
         const currentDate = new Date()
         
-        // const day = 
         setInterval(function () {
             time = time + 1000 
             const presentDate = new Date(time)
@@ -94,29 +75,39 @@ class App {
             document.querySelector('.welcome-message').style.color = 'white'
         }
     }
+    _taskValidation() {
+         
+    }
     addTaskBtn() {
         taskPage.classList.toggle('hidden');
-        overlay.classList.toggle('hidden');
+        this._displayToggleOverlay();
     }
     _addTaskCta(e) {
-    e.preventDefault()
-    user.active.title.push(addTaskTitle.value)
-    user.active.description.push(addTaskDescription.value)
-    taskPage.classList.toggle('hidden');
-    overlay.classList.toggle('hidden');
-
+        e.preventDefault()
+        if (addTaskTitle.value === '' && addTaskDescription.value === '') {
+            document.querySelector('.dropdown-open').classList.remove('dropdown');
+        } else {
+            user.active.title.push(addTaskTitle.value)
+            user.active.description.push(addTaskDescription.value)
+            taskPage.classList.toggle('hidden');
+            overlay.classList.toggle('hidden'); 
+       }
+        setTimeout(() => {
+        document.querySelector('.dropdown-open').classList.add('dropdown');
+        }, 10000)
+        
     // UPDATEUI
     this.updateUI()
         addTaskTitle.value = '';
         addTaskDescription.value = ''; 
     }
-    _toggleOverlay(e) {
-         e.preventDefault()
-    sideBar.classList.add('hidden');
-    taskPage.classList.add('hidden');
+    _displayToggleOverlay() {
     overlay.classList.toggle('hidden');
     }
-
+    _hideToggleOverlay() {
+        taskPage.classList.add('hidden');
+        overlay.classList.toggle('hidden');
+    }
     
     _displayActiveTasks(user) {
         activeTaskContainer.style.marginTop = '10px'
@@ -127,10 +118,12 @@ class App {
         user.active.title.forEach((title, i) => {
             const description = user.active.description[i]
             
-        const html = `<div class="flex justify-between items-center">
-                <div>
+            const html = `
+
+            <div  class=" flex justify-between items-center">
+                <div >
                     <div class=" flex  gap-3 items-start   ">
-                        <input type="checkbox"  class="checkers self-center bg-red-500 align-middle" />
+                        <div class="tick  cursor-pointer" data-id = ${i}>&tint;</div>
                         <p class="active-title align-middle" data-id = ${i}>${title}</p>
                     </div>
                     <p class="ml-7 text-sm text-teal-700 " data-id = ${i}>${description}</p>
@@ -138,11 +131,8 @@ class App {
                 <div class=" active-delete__btn text-2xl cursor-pointer text-white " data-delete=${i}>
                     &times;
                 </div>
-                </div>`
+            </div>`
         activeTaskContainer.insertAdjacentHTML('afterbegin', html)
-        // console.log(user.active.title.length)
-        // console.log(user.completed.title.length)
-            // console.log(user.active.title.length);
     });
     }
     updateUI() {
@@ -157,10 +147,9 @@ class App {
             `<div class="flex justify-between items-center">
                 <div>
                     <div class=" flex  gap-3 items-start   ">
-                        <input type="checkbox" name="checkbox" class="checkers self-center bg-red-500 align-middle" />
-                        <p class="completed-title align-middle" >${title}</p>
+                        <p class="completed-title  align-middle" >${title}</p>
                     </div>
-                    <p class="ml-7 text-sm text-teal-700" >${description}
+                    <p class=" text-sm text-teal-700"   >${description}
                     </p>
                 </div>
                 <div class=" completed-delete__btn text-2xl cursor-pointer text-white" data-delete=${i}>
@@ -178,7 +167,7 @@ class App {
         if (e.target.classList.contains('completed-delete__btn')) {
            this._deleteCompletedTask(e, user)
         }
-        if (e.target.classList.contains('active-title')) { 
+        if (e.target.classList.contains('tick')) { 
             this._moveTaskToCompleted(e, user);
         }
     }
@@ -186,7 +175,6 @@ class App {
         user.active.title.splice([e.target.dataset.delete], 1);
         user.active.description.splice([e.target.dataset.delete], 1);
         this.updateUI()
-        console.log(user.active.title.length);
     }
     _deleteCompletedTask(e, user) {
         user.completed.title.splice([e.target.dataset.delete], 1);
@@ -195,7 +183,6 @@ class App {
     }
     _moveTaskToCompleted(e, user) {
         user.completed.title.push(user.active.title[e.target.dataset.id])
-        // console.log(user.active.description[e.target.dataset.description])
         user.completed.description.push(user.active.description[e.target.dataset.id])
         user.active.title.splice(e.target.dataset.title, 1);
         user.active.description.splice(e.target.dataset.description, 1);
@@ -235,6 +222,7 @@ class App {
         activeTask.classList.remove('hidden');
         completedTask.classList.add('hidden');
         demarcation.classList.add('hidden');
+
     }
     _displayOnlyCompletedTask() {
         completedTask.classList.remove('hidden')

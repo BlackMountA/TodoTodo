@@ -13,7 +13,7 @@
   background-color: rgba(0, 0, 0, 0.5);
 }
 .active-link {
-  border-bottom: 1px white solid;
+  border-bottom: 1px #0f766e solid;
   transition: all 10s 0.5s;
 }
 .main-area {
