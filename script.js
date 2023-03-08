@@ -15,7 +15,7 @@ const footerLink = document.querySelectorAll('.footer-link')
 const demarcation = document.querySelector('.line');
 const darkModeSun = document.querySelector('.dark-mode__sun')
 const darkModeMoon = document.querySelector('.dark-mode__moon')
-
+const mobileCreateContent = document.querySelector('.add__Task--mobile')
 const user = {
     active: {
         title: [],
@@ -34,6 +34,7 @@ class App {
         nav.addEventListener('click', this._navEvents.bind(this))
         footer.addEventListener('click', this._footerEvents.bind(this))
         addTaskCta.addEventListener('click', this._addTaskCta.bind(this))
+        mobileCreateContent.addEventListener('click', this.mobileAddTaskBtn.bind(this))
         tasksContainer.addEventListener('click', this._taskContainerEvents.bind(this))
         overlay.addEventListener('click', this._hideToggleOverlay);
         this._displayActiveTasks(user)
@@ -75,14 +76,24 @@ class App {
             document.querySelector('.welcome-message').style.color = 'white'
         }
     }
-    _taskValidation() {
-         
+    
+    _displayToggleOverlay() {
+    overlay.classList.toggle('hidden');
+    }
+    _hideToggleOverlay() {
+        taskPage.classList.add('hidden');
+        overlay.classList.toggle('hidden');
     }
     addTaskBtn() {
         taskPage.classList.toggle('hidden');
         this._displayToggleOverlay();
     }
+    mobileAddTaskBtn() {
+        taskPage.classList.toggle('hidden');
+        this._displayToggleOverlay();
+    }
     _addTaskCta(e) {
+
         e.preventDefault()
         if (addTaskTitle.value === '' && addTaskDescription.value === '') {
             document.querySelector('.dropdown-open').classList.remove('dropdown');
@@ -101,13 +112,7 @@ class App {
         addTaskTitle.value = '';
         addTaskDescription.value = ''; 
     }
-    _displayToggleOverlay() {
-    overlay.classList.toggle('hidden');
-    }
-    _hideToggleOverlay() {
-        taskPage.classList.add('hidden');
-        overlay.classList.toggle('hidden');
-    }
+    
     
     _displayActiveTasks(user) {
         activeTaskContainer.style.marginTop = '10px'
