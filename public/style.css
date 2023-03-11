@@ -1011,6 +1011,12 @@ video {
   /* right: 0; */
   text-align: center;
 }
+.task-title:focus {
+  outline: none;
+}
+.task-description:focus {
+  outline: none;
+}
 .dropdown {
   /* display: none; */
   opacity: 0;
@@ -1032,7 +1038,6 @@ video {
 .add__Task--mobile {
   display: none;
 }
-
 .footer-link {
   position: relative;
 }
@@ -1057,10 +1062,10 @@ video {
   .create-content {
     width: 50%;
   }
-  .clear-active {
+  .clear-active--lg {
     display: none;
   }
-  .clear-completed {
+  .clear-completed--lg {
     display: none;
   }
   .footer__sm {
@@ -1077,10 +1082,10 @@ video {
   .tasks {
     width: 75%;
   }
-  .clear-active {
+  .clear-active--lg {
     display: none;
   }
-  .clear-completed {
+  .clear-completed--lg {
     display: none;
   }
   .footer__sm {

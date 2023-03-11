@@ -11,35 +11,37 @@ const completedTask = document.querySelector('.completed-task')
 const addTaskTitle = document.querySelector('.task-title');
 const addTaskDescription = document.querySelector('.task-description');
 const footer = document.querySelector('footer')
+const footerSm = document.querySelector('.footer__sm')
 const footerLink = document.querySelectorAll('.footer-link')
 const demarcation = document.querySelector('.line');
 const darkModeSun = document.querySelector('.dark-mode__sun')
 const darkModeMoon = document.querySelector('.dark-mode__moon')
 const mobileCreateContent = document.querySelector('.add__Task--mobile')
-const user = {
-    active: {
-        title: [],
-        description: []
-    },
 
-    
-    completed: {
-        title: [ ],
-        description: []
+class task {
+    id = (Date.now() + '').slice(-10);
+    constructor(title, description, type) {
+        this.title = title;
+        this.description = description
+        this.type = type;
     }
-};
+}
 
 class App {
-    constructor(user) {
+    allTasks = []
+    completedTasks = []
+    constructor() {
         nav.addEventListener('click', this._navEvents.bind(this))
         footer.addEventListener('click', this._footerEvents.bind(this))
+        footerSm.addEventListener('click', this._footerSmEvents.bind(this))
         addTaskCta.addEventListener('click', this._addTaskCta.bind(this))
         mobileCreateContent.addEventListener('click', this.mobileAddTaskBtn.bind(this))
         tasksContainer.addEventListener('click', this._taskContainerEvents.bind(this))
         overlay.addEventListener('click', this._hideToggleOverlay);
-        this._displayActiveTasks(user)
-        this._displayCompletedTasks(user)
+        this._displayActiveTasks()
+        this._displayCompletedTasks()
         this._setDescription()
+        this._getLocalStorage()
     }
      
     _navEvents(e) {
@@ -71,9 +73,13 @@ class App {
             document.querySelector('body').style.backgroundColor = 'white'
             document.querySelector('.welcome-message').style.color = 'black'
             document.querySelector('.add__Task--mobile').style.color = 'black'
+            document.querySelector('.info').style.color = 'black'
+
         } else {
             document.querySelector('body').style.backgroundColor = 'black'
             document.querySelector('.welcome-message').style.color = 'white'
+            document.querySelector('.info').style.color = 'white'
+            document.querySelector('.add__Task--mobile').style.color = 'white'
         }
     }
     
@@ -86,6 +92,7 @@ class App {
     }
     addTaskBtn() {
         taskPage.classList.toggle('hidden');
+        addTaskTitle.focus();
         this._displayToggleOverlay();
     }
     mobileAddTaskBtn() {
@@ -93,47 +100,46 @@ class App {
         this._displayToggleOverlay();
     }
     _addTaskCta(e) {
-
+        let newTask;
         e.preventDefault()
         if (addTaskTitle.value === '' && addTaskDescription.value === '') {
             document.querySelector('.dropdown-open').classList.remove('dropdown');
         } else {
-            user.active.title.push(addTaskTitle.value)
-            user.active.description.push(addTaskDescription.value)
+            newTask = new task(addTaskTitle.value, addTaskDescription.value, 'active')
+            this.allTasks.push(newTask)
             taskPage.classList.toggle('hidden');
             overlay.classList.toggle('hidden'); 
-       }
+        }
         setTimeout(() => {
         document.querySelector('.dropdown-open').classList.add('dropdown');
         }, 10000)
-        
-    // UPDATEUI
-    this.updateUI()
+
+        // UPDATEUI
+        this.updateUI()
+
         addTaskTitle.value = '';
         addTaskDescription.value = ''; 
+        //Set Local Storage to All Tasks
+        this._setLocalStorage()
     }
     
     
-    _displayActiveTasks(user) {
+    _displayActiveTasks() {
         activeTaskContainer.style.marginTop = '10px'
         activeTaskContainer.innerHTML = ''
-        document.querySelector('.active-length').textContent = `${user.active.description.length}`
-        document.querySelector('.completed-length').textContent = `${user.completed.title.length}`
-
-        user.active.title.forEach((title, i) => {
-            const description = user.active.description[i]
-            
+        document.querySelector('.active-length').textContent = `${this.allTasks.length}`
+        this.allTasks.forEach((task) => {
             const html = `
 
             <div  class=" flex justify-between items-center">
                 <div >
                     <div class=" flex  gap-3 items-start   ">
-                        <div class="tick  cursor-pointer" data-id = ${i}>&tint;</div>
-                        <p class="active-title align-middle" data-id = ${i}>${title}</p>
+                        <div class="tick  cursor-pointer" data-id = ${task.id}>&tint;</div>
+                        <p class="active-title text-white align-middle">${task.title}</p>
                     </div>
-                    <p class="ml-7 text-sm text-teal-700 " data-id = ${i}>${description}</p>
+                    <p class="ml-7 text-sm text-teal-700 ">${task.description}</p>
                 </div>
-                <div class=" active-delete__btn text-2xl cursor-pointer text-white " data-delete=${i}>
+                <div class=" active-delete__btn text-2xl cursor-pointer text-white " data-delete=${task.id}>
                     &times;
                 </div>
             </div>`
@@ -141,61 +147,74 @@ class App {
     });
     }
     updateUI() {
-        this._displayActiveTasks(user)
-        this._displayCompletedTasks(user)
+        this._displayActiveTasks()
+        this._displayCompletedTasks()
     }
-    _displayCompletedTasks(user) {
+    _displayCompletedTasks() {
         completedTaskContainer.innerHTML = '';
-    user.completed.title.forEach((title, i) => {
-        const description = user.completed.description[i];
-        const html = 
-            `<div class="flex justify-between items-center">
-                <div>
-                    <div class=" flex  gap-3 items-start   ">
-                        <p class="completed-title  align-middle" >${title}</p>
+        document.querySelector('.completed-length').textContent = `${this.completedTasks.length}`
+        this.completedTasks.forEach((task) => {
+            const html = 
+                `<div class="flex justify-between items-center">
+                    <div>
+                        <div class=" flex  gap-3 items-start">
+                            <p class="completed-title  align-middle" >${task.title}</p>
+                        </div>
+                        <p class=" text-sm text-teal-700"   >${task.description}</p>
                     </div>
-                    <p class=" text-sm text-teal-700"   >${description}
-                    </p>
-                </div>
-                <div class=" completed-delete__btn text-2xl cursor-pointer text-white" data-delete=${i}>
-                    &times;
-                </div>
-            </div>`
-        completedTaskContainer.insertAdjacentHTML('afterbegin', html)
-    })
+                    <div class=" completed-delete__btn text-2xl cursor-pointer text-white" data-delete=${task.id}>
+                        &times;
+                    </div>
+                </div>`
+            completedTaskContainer.insertAdjacentHTML('afterbegin', html)
+        })
     }
     _taskContainerEvents(e) {
         e.preventDefault();
         if (e.target.classList.contains('active-delete__btn')) {
-           this._deleteActiveTask(e, user)
+           this._deleteActiveTask(e)
         }
         if (e.target.classList.contains('completed-delete__btn')) {
-           this._deleteCompletedTask(e, user)
+           this._deleteCompletedTask(e)
         }
         if (e.target.classList.contains('tick')) { 
-            this._moveTaskToCompleted(e, user);
+            this._moveTaskToCompleted(e);
         }
     }
-    _deleteActiveTask(e, user) {
-        user.active.title.splice([e.target.dataset.delete], 1);
-        user.active.description.splice([e.target.dataset.delete], 1);
+    _deleteActiveTask(e) {
+        const deletedIndex = this.allTasks.findIndex((task) => {
+            return e.target.dataset.delete === task.id
+        })
+        this.allTasks.splice(deletedIndex, 1);
         this.updateUI()
+        this._setLocalStorage()
+
     }
     _deleteCompletedTask(e, user) {
-        user.completed.title.splice([e.target.dataset.delete], 1);
-        user.completed.description.splice([e.target.dataset.delete], 1);
+        const deletedIndex = this.completedTasks.findIndex((task) => {
+            return e.target.dataset.delete === task.id
+        })
+        this.completedTasks.splice(deletedIndex, 1);
         this.updateUI()
-    }
-    _moveTaskToCompleted(e, user) {
-        user.completed.title.push(user.active.title[e.target.dataset.id])
-        user.completed.description.push(user.active.description[e.target.dataset.id])
-        user.active.title.splice(e.target.dataset.title, 1);
-        user.active.description.splice(e.target.dataset.description, 1);
-        this.updateUI()
+        this._setLocalStorage()
 
+    }
+    _moveTaskToCompleted(e) {
+        const tickedObject = this.allTasks.find((task) => {
+            return e.target.dataset.id === task.id
+        })
+        const tickedIndex = this.allTasks.findIndex((task) => {
+            return e.target.dataset.id === task.id
+        })
+        this.completedTasks.push(tickedObject)
+        this.allTasks.splice(tickedIndex, 1);
+        this.updateUI()
+        this._setLocalStorage()
+        
     }
     
     _footerEvents(e) {
+        console.log()
         footerLink.forEach(el => {
             el.classList.remove('active-link')
         })
@@ -216,7 +235,16 @@ class App {
         if (e.target.classList.contains('clear-completed')) {
             this._clearCompleted()
         }
-        
+    }
+    _footerSmEvents(e) {
+         if (e.target.classList.contains('clear-active__sm')) {
+             this._clearActive()
+             this._setLocalStorage()
+        }
+        if (e.target.classList.contains('clear-completed__sm')) {
+            this._clearCompleted()
+            this._setLocalStorage()
+        }
     }
     displayAllTask() {
         completedTask.classList.remove('hidden')
@@ -235,18 +263,29 @@ class App {
         demarcation.classList.add('hidden');
     }
     _clearActive() {
-        user.active.title.splice(0)
-        user.active.description.splice(0)
-        this.updateUI(user)
+        this.allTasks.splice(0)
+        this.updateUI()
     }
     _clearCompleted() {
-        user.completed.title.splice(0)
-        user.completed.description.splice(0)
-        this.updateUI(user)
+        this.completedTasks.splice(0)
+        this.updateUI()
     }
-    
-}
-new App(user)
+    _setLocalStorage() {
+        console.log('yeah')
+        localStorage.setItem('alltask', JSON.stringify(this.allTasks))
+        localStorage.setItem('completedtask', JSON.stringify(this.completedTasks))
+    }
+    _getLocalStorage() {
+        const allData = JSON.parse(localStorage.getItem('alltask'))
+        if (!allData) return;
+        const completedData = JSON.parse(localStorage.getItem('completedtask'))
+        this.allTasks = allData
+        this.completedTasks = completedData
 
+        // UPDATE UI
+        this.updateUI()
+    }
+}
+new App()
 
 
